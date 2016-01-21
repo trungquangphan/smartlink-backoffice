@@ -7,7 +7,7 @@
 <body>
 <div>
     <section layout:fragment="content">
-        <h1>Home page - PCS</h1>
+        <h1 id="pcs-header">Home page - PCS</h1>
     </section>
 </div>
 </body>
