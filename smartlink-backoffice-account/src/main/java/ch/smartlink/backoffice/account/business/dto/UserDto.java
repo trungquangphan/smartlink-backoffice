@@ -1,6 +1,6 @@
 package ch.smartlink.backoffice.account.business.dto;
 
-import com.smartlink.services.dao.master.entities.MasterUser;
+import ch.smartlink.backoffice.dao.entity.MasterUser;
 
 import java.io.Serializable;
 import java.util.List;

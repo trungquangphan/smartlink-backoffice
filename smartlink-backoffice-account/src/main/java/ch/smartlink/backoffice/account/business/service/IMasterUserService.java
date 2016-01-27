@@ -4,8 +4,7 @@ import ch.smartlink.backoffice.account.business.dto.*;
 import ch.smartlink.backoffice.account.web.form.EditUserForm;
 import ch.smartlink.backoffice.account.web.form.UserForm;
 import ch.smartlink.backoffice.account.web.form.UserStatusChangeForm;
-import com.smartlink.services.dao.master.entities.MasterGroupUser;
-import com.smartlink.services.dao.master.entities.MasterUser;
+import ch.smartlink.backoffice.dao.entity.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

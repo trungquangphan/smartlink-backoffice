@@ -43,9 +43,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.smartlink.services</groupId>
-            <artifactId>smartlink-services-dao</artifactId>
-            <version>${smartlink.services.dao}</version>
+            <groupId>ch.smartlink</groupId>
+            <artifactId>smartlink-backoffice-dao</artifactId>
+            <version>${smartlink-backoffice-dao.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

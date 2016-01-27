@@ -1,8 +1,8 @@
 package ch.smartlink.backoffice.master.config.security;
 
 import ch.smartlink.core.log.LOG;
-import com.smartlink.services.dao.master.entities.MasterUser;
-import com.smartlink.services.dao.master.repositories.IMasterUserRepository;
+import ch.smartlink.backoffice.dao.entity.MasterUser;
+import ch.smartlink.backoffice.dao.repository.IMasterUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

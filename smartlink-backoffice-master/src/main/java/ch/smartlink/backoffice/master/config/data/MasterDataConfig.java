@@ -26,7 +26,7 @@ import java.util.Properties;
 @EnableJpaRepositories(
         transactionManagerRef = "masterTransactionManager",
         entityManagerFactoryRef = "entityManagerFactoryForMaster",
-        basePackages = "com.smartlink.services.dao.master.repositories")
+        basePackages = "ch.smartlink.backoffice.dao.repository")
 public class MasterDataConfig {
 
 
@@ -46,7 +46,7 @@ public class MasterDataConfig {
 
         factory.setDataSource(masterDataSource());
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("com.smartlink.services.dao.master.entities", "com.smartlink.services.dao.tenant.entities");
+        factory.setPackagesToScan("ch.smartlink.backoffice.dao.entity", "com.smartlink.services.dao.tenant.entities");
 
         Properties jpaProperties = new Properties();
         jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");

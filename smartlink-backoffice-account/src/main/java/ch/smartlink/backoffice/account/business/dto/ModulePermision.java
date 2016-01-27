@@ -1,7 +1,7 @@
 package ch.smartlink.backoffice.account.business.dto;
 
-import com.smartlink.services.dao.constant.ModuleType;
-import com.smartlink.services.dao.constant.Permission;
+import ch.smartlink.backoffice.dao.constant.ModuleType;
+import ch.smartlink.backoffice.dao.constant.Permission;
 
 import java.io.Serializable;
 

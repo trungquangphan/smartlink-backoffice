@@ -8,9 +8,9 @@ import ch.smartlink.backoffice.master.util.BOSecurityChecker;
 import ch.smartlink.backoffice.master.web.form.Menu;
 import ch.smartlink.backoffice.master.web.form.MenuItem;
 import ch.smartlink.core.utils.JsonUtil;
-import com.smartlink.services.dao.master.entities.MasterTenant;
-import com.smartlink.services.dao.master.repositories.IMasterTenantRepository;
-import com.smartlink.services.dao.master.repositories.IMenuRepository;
+import ch.smartlink.backoffice.dao.entity.MasterTenant;
+import ch.smartlink.backoffice.dao.repository.IMasterTenantRepository;
+import ch.smartlink.backoffice.dao.repository.IMenuRepository;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +58,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     public Menu getMenuByTenant(String tenantName) {
-        List<com.smartlink.services.dao.master.entities.Menu> menus = menuRepository.findByTenantId(tenantName);
+        List<ch.smartlink.backoffice.dao.entity.Menu> menus = menuRepository.findByTenantId(tenantName);
         if (menus.isEmpty()) {
             menus = menuRepository.findByTenantId(AppConstants.TENANT_MASTER);
         }
@@ -66,7 +66,7 @@ public class MenuServiceImpl implements MenuService {
         List<MenuItem> menuItems = new ArrayList<>();
         int order = 0;
         while (true) {
-            Optional<com.smartlink.services.dao.master.entities.Menu> menuAtLevel1 = getMenuItemByParentAndOrder(menus, "", order);
+            Optional<ch.smartlink.backoffice.dao.entity.Menu> menuAtLevel1 = getMenuItemByParentAndOrder(menus, "", order);
             if (menuAtLevel1.isPresent()) {
                 MenuItem menuItem = buildMenuItem(menus, menuAtLevel1.get());
                 menuItems.add(menuItem);
@@ -81,7 +81,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public void validateMenu(List<com.smartlink.services.dao.master.entities.Menu> menus) {
+    public void validateMenu(List<ch.smartlink.backoffice.dao.entity.Menu> menus) {
         /*TODO: a valid menu has to meet the below requirements:
                 + The child menu items must belong to a existence parent menu item. (except the menu items level 1 which don't have parent)
                 + All the menu item must follow the continuous order
@@ -98,7 +98,7 @@ public class MenuServiceImpl implements MenuService {
         return menuInJson;
     }
 
-    private static MenuItem buildMenuItem(List<com.smartlink.services.dao.master.entities.Menu> menus, com.smartlink.services.dao.master.entities.Menu menu) {
+    private static MenuItem buildMenuItem(List<ch.smartlink.backoffice.dao.entity.Menu> menus, ch.smartlink.backoffice.dao.entity.Menu menu) {
         MenuItem menuItem = new MenuItem();
         menuItem.setId(menu.getId());
         menuItem.setLink(menu.getLink());
@@ -120,11 +120,11 @@ public class MenuServiceImpl implements MenuService {
         return String.format(ROLE_FORMAT, WebUtil.getSelectedTenant(), moduleName);
     }
 
-    private static List<MenuItem> buildMenuItem(List<com.smartlink.services.dao.master.entities.Menu> menus, MenuItem menuItemParent) {
+    private static List<MenuItem> buildMenuItem(List<ch.smartlink.backoffice.dao.entity.Menu> menus, MenuItem menuItemParent) {
         List<MenuItem> menuItems = new ArrayList<>();
         int order = 0;
         while (true) {
-            Optional<com.smartlink.services.dao.master.entities.Menu> menuAtLevel1 = getMenuItemByParentAndOrder(menus, menuItemParent.getId(), order);
+            Optional<ch.smartlink.backoffice.dao.entity.Menu> menuAtLevel1 = getMenuItemByParentAndOrder(menus, menuItemParent.getId(), order);
             if (menuAtLevel1.isPresent()) {
                 MenuItem menuItem = buildMenuItem(menus, menuAtLevel1.get());
                 menuItems.add(menuItem);
@@ -137,7 +137,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
 
-    private static Optional<com.smartlink.services.dao.master.entities.Menu> getMenuItemByParentAndOrder(List<com.smartlink.services.dao.master.entities.Menu> menus, String parent, int order) {
+    private static Optional<ch.smartlink.backoffice.dao.entity.Menu> getMenuItemByParentAndOrder(List<ch.smartlink.backoffice.dao.entity.Menu> menus, String parent, int order) {
         return menus.stream().filter(m -> StringUtils.equals(m.getParrentId(), parent) && m.getOrder() == order).findFirst();
     }
 

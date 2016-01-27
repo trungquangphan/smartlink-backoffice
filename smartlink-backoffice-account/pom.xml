@@ -11,9 +11,9 @@
     <artifactId>smartlink-backoffice-account</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.smartlink.services</groupId>
-            <artifactId>smartlink-services-dao</artifactId>
-            <version>${smartlink.services.dao}</version>
+            <groupId>ch.smartlink</groupId>
+            <artifactId>smartlink-backoffice-dao</artifactId>
+            <version>${smartlink-backoffice-dao.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

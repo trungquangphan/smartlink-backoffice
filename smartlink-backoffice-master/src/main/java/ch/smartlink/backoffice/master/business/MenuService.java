@@ -14,5 +14,5 @@ public interface MenuService {
 
     Menu getMenuByTenant(String tenantName);
 
-    void validateMenu(List<com.smartlink.services.dao.master.entities.Menu> menus);
+    void validateMenu(List<ch.smartlink.backoffice.dao.entity.Menu> menus);
 }

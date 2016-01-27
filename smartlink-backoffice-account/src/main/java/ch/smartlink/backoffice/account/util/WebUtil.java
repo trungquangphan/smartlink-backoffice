@@ -3,7 +3,7 @@ package ch.smartlink.backoffice.account.util;
 
 import ch.smartlink.backoffice.account.business.dto.UserDto;
 import ch.smartlink.backoffice.common.constant.AppConstants;
-import com.smartlink.services.dao.master.entities.MasterUser;
+import ch.smartlink.backoffice.dao.entity.MasterUser;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
