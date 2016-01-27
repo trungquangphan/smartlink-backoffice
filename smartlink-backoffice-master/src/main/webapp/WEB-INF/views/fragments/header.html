@@ -1,8 +1,8 @@
 <div th:fragment="header" ng-controller="HeaderController"
      th:attr="ng-init='init(\''+${@menuService.getMenuDataInJson()}+'\');'">
     <script type="text/ng-template" id="menu_renderer.html">
-        <a ng-if="item.hasAuthority" ng-href="{{item.link}}">{{item.name}}</a>
-        <ul ng-if="childMenuItemHaveAuthority(item)">
+        <a ng-href="{{item.link}}">{{item.name}}</a>
+        <ul ng-if="item.items.length>0">
             <li ng-repeat="item in item.items" ng-include="'menu_renderer.html'"></li>
         </ul>
     </script>

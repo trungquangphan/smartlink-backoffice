@@ -1,5 +1,7 @@
 package ch.smartlink.backoffice.master.web.form;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -10,10 +12,10 @@ public class MenuItem implements Serializable {
     private String id;
     private String name;
     private String link;
-    private boolean hasAuthority;
     private String moduleName;
     private List<MenuItem> items;
 
+    @JsonIgnore
     public String getModuleName() {
         return moduleName;
     }
@@ -44,14 +46,6 @@ public class MenuItem implements Serializable {
 
     public void setLink(String link) {
         this.link = link;
-    }
-
-    public boolean isHasAuthority() {
-        return hasAuthority;
-    }
-
-    public void setHasAuthority(boolean hasAuthority) {
-        this.hasAuthority = hasAuthority;
     }
 
     public List<MenuItem> getItems() {

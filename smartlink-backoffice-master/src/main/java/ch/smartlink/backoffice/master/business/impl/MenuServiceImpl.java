@@ -12,6 +12,7 @@ import com.smartlink.services.dao.master.entities.MasterTenant;
 import com.smartlink.services.dao.master.repositories.IMasterTenantRepository;
 import com.smartlink.services.dao.master.repositories.IMenuRepository;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -49,8 +50,11 @@ public class MenuServiceImpl implements MenuService {
         if (menu == null) {
             menu = menuMap.get(AppConstants.TENANT_MASTER);
         }
-        setAuthority(menu.getMenuItems());
-        return menu;
+        List<MenuItem> resultMenuItems = new ArrayList<>();
+        setAuthority(resultMenuItems, menu.getMenuItems());
+        Menu resultMenu = new Menu();
+        resultMenu.setMenuItems(resultMenuItems);
+        return resultMenu;
     }
 
     public Menu getMenuByTenant(String tenantName) {
@@ -137,13 +141,17 @@ public class MenuServiceImpl implements MenuService {
         return menus.stream().filter(m -> StringUtils.equals(m.getParrentId(), parent) && m.getOrder() == order).findFirst();
     }
 
-    public void setAuthority(List<MenuItem> menuItems) {
+    public void setAuthority(List<MenuItem> resultMenuItems, final List<MenuItem> menuItems) {
         menuItems.forEach(menuItem -> {
             boolean hasAuthority = checkAuthority(menuItem.getModuleName());
             if (hasAuthority) {
-                menuItem.setHasAuthority(true);
+                MenuItem resultMenuItem = new MenuItem();
+                BeanUtils.copyProperties(menuItem, resultMenuItem);
+                resultMenuItems.add(resultMenuItem);
                 if (!menuItem.getItems().isEmpty()) {
-                    setAuthority(menuItem.getItems());
+                    List<MenuItem> menuItemsTemp = new ArrayList<>();
+                    resultMenuItem.setItems(menuItemsTemp);
+                    setAuthority(menuItemsTemp, menuItem.getItems());
                 }
             }
         });

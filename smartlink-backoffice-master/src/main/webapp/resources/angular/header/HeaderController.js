@@ -8,15 +8,4 @@ boAngularApp.controller('HeaderController', ["$scope", "$http", "serviceCommunic
         $scope.menus = JSON.parse(data).menuItems;
     };
 
-    $scope.childMenuItemHaveAuthority = function (item) {
-        if (item.items.length == 0)
-            return false;
-
-        for (var i = 0; i < item.items.length; i++) {
-            if (item.items[i].hasAuthority) {
-                return true;
-            }
-        }
-    };
-
 }])
