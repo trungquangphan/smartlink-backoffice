@@ -8,6 +8,10 @@
 <div>
     <section layout:fragment="content">
         <h1 id="pcs-header">Home page - PCS</h1>
+
+        <div sec:authorize="hasRole('ROLE_%s_MANAGE_CALLING_CARD_PROVIDERS_VIEW')">
+            <p>You see this because you have permission on MANAGE_CALLING_CARD_PROVIDERS_VIEW</p>
+        </div>
     </section>
 </div>
 </body>

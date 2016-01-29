@@ -31,10 +31,6 @@ import java.util.List;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private UserDetailsService userDetailsService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
     private AuthenticationProvider authenticationProvider;
 
     @Bean
@@ -72,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        //Do not use UserDetailService because it reduces the performance since it always access db to build authorities before checking password.
         auth.authenticationProvider(authenticationProvider);
     }
 

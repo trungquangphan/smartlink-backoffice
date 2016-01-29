@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class PCSHomeController {
     @RequestMapping
-    @Secured("ROLE_%s_USER")
+    @Secured("ROLE_%s_MANAGE_CALLING_CARD_PROVIDERS_VIEW")
     public String index() {
         return "smartlink-backoffice-pcs/index";
     }

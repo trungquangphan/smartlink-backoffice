@@ -1,5 +1,6 @@
 package ch.smartlink.backoffice.master.config.web;
 
+import ch.smartlink.backoffice.master.config.security.BOSpringSecurityDialet;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -38,7 +39,7 @@ public class ThymeleafConfig {
         springTemplateEngine.setTemplateResolver(templateResolver());
         Set<IDialect> additionalDialets = new HashSet<IDialect>();
         additionalDialets.add(new LayoutDialect());
-        additionalDialets.add(new SpringSecurityDialect());
+        additionalDialets.add(new BOSpringSecurityDialet());
         springTemplateEngine.setAdditionalDialects(additionalDialets);
         return springTemplateEngine;
     }
