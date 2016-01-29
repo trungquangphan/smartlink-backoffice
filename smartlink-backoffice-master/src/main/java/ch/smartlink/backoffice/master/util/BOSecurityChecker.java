@@ -1,8 +1,7 @@
 package ch.smartlink.backoffice.master.util;
 
 import ch.smartlink.backoffice.common.constant.AppConstants;
-import ch.smartlink.backoffice.common.util.WebUtil;
-import org.apache.commons.lang.StringUtils;
+import ch.smartlink.backoffice.common.util.TenantUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,7 +38,7 @@ public class BOSecurityChecker {
 
     public boolean voteInAllTenants(String attribute,
                                     Collection<? extends GrantedAuthority> authorities) {
-        List<String> tenants = WebUtil.getSelectedTenantHasMaster();
+        List<String> tenants = TenantUtil.getSelectedTenantHasMaster();
         return voteInTenants(attribute, authorities, tenants);
     }
 

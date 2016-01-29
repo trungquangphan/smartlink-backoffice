@@ -2,7 +2,7 @@ package ch.smartlink.backoffice.account.business.service.impl;
 
 import ch.smartlink.backoffice.account.business.dto.*;
 import ch.smartlink.backoffice.account.business.service.IMasterUserService;
-import ch.smartlink.backoffice.account.util.WebUtil;
+import ch.smartlink.backoffice.account.util.AccountUtil;
 import ch.smartlink.backoffice.account.web.form.EditUserForm;
 import ch.smartlink.backoffice.account.web.form.UserForm;
 import ch.smartlink.backoffice.account.web.form.UserStatusChangeForm;
@@ -387,8 +387,8 @@ public class MasterUserServiceImpl implements IMasterUserService {
         requestDTO.setUsedForAddRemoveUser(true);
         requestDTO.setGroupId(groupId);
         requestDTO.setUsedForFirstLoadUser(true);
-        requestDTO.setUserDoSearchId(WebUtil.getUserLogined().getMasterUser().getId());
-        if (WebUtil.checkLoginUserIsMaster()) {
+        requestDTO.setUserDoSearchId(AccountUtil.getUserLogined().getMasterUser().getId());
+        if (AccountUtil.checkLoginUserIsMaster()) {
             // find all available user in any group in any tenant
             resultDto = this.findUsers(requestDTO);
         } else {
@@ -463,7 +463,7 @@ public class MasterUserServiceImpl implements IMasterUserService {
 
     @SuppressWarnings("deprecation")
     private void setResetPasswordLink(UserForm userForm, HttpServletRequest request) {
-//        StringBuilder resetLink = new StringBuilder(WebUtil.getServerUrlWithContextPath(request) + "/reset-password-action");
+//        StringBuilder resetLink = new StringBuilder(AccountUtil.getServerUrlWithContextPath(request) + "/reset-password-action");
 //        StringBuilder param = new StringBuilder("");
 //        param.append(DigestUtils.sha256Hex(userForm.getId()));
 //        resetLink.append("?resetPasswordId=" + param.toString());
@@ -472,10 +472,10 @@ public class MasterUserServiceImpl implements IMasterUserService {
 
     @Override
     public UserListResultDto findAllUserCanBeAddToGroup(UserListRequestDto listRequestDto) {
-        String loginUserId = WebUtil.getUserLogined().getMasterUser().getId();
+        String loginUserId = AccountUtil.getUserLogined().getMasterUser().getId();
         listRequestDto.setUserDoSearchId(loginUserId);
         UserListResultDto resultDto = new UserListResultDto();
-        if (WebUtil.checkLoginUserIsMaster()) {
+        if (AccountUtil.checkLoginUserIsMaster()) {
             // find all available user in any group in any tenant
             resultDto = this.findUsers(listRequestDto);
         } else {
@@ -587,10 +587,10 @@ public class MasterUserServiceImpl implements IMasterUserService {
 
     private List<MasterGroupUser> getMasterGroupUsers(String id) {
         List<MasterGroupUser> masterGroupUsers = new ArrayList<>();
-        if (WebUtil.checkLoginUserIsMaster()) {
+        if (AccountUtil.checkLoginUserIsMaster()) {
             masterGroupUsers = masterGroupUserRepository.findByUserId(id);
         } else {
-            String tenantName = WebUtil.getSelectedTenant();
+            String tenantName = AccountUtil.getSelectedTenant();
             masterGroupUsers = masterGroupUserRepository.findByUserIdAndTenantName(id, tenantName);
         }
         return masterGroupUsers;
@@ -598,7 +598,7 @@ public class MasterUserServiceImpl implements IMasterUserService {
 
     private List<MasterGroupUser> getMasterGroupUsers(String id, List<String> tenantNames) {
         List<MasterGroupUser> masterGroupUsers = new ArrayList<>();
-        if (WebUtil.checkLoginUserIsMaster()) {
+        if (AccountUtil.checkLoginUserIsMaster()) {
             masterGroupUsers = masterGroupUserRepository.findByUserId(id);
         } else {
             for (String tenantName : tenantNames) {
@@ -629,7 +629,7 @@ public class MasterUserServiceImpl implements IMasterUserService {
     }
 
     private void checkPasswordContainUnacceptableCharacter(String newPassword) {
-        List<String> blockCharacters = WebUtil.getCharacters();
+        List<String> blockCharacters = AccountUtil.getCharacters();
         if (CollectionUtils.isNotEmpty(blockCharacters)) {
             for (String blockCharacter : blockCharacters) {
                 if (StringUtils.contains(newPassword, blockCharacter)) {
@@ -711,11 +711,11 @@ public class MasterUserServiceImpl implements IMasterUserService {
 
     private void saveUserInformationToSession(MasterUser masterUser, boolean needToReSaveUserToSession) {
 //        if (needToReSaveUserToSession) {
-//            UserDto userDto = WebUtil.getUserLogined();
+//            UserDto userDto = AccountUtil.getUserLogined();
 //            UserDto newUserDto = new UserDto();
 //            newUserDto.setModulePermisions(userDto.getModulePermisions());
 //            newUserDto.setMasterUser(masterUser);
-//            WebUtil.storeUserIntoSession(newUserDto);
+//            AccountUtil.storeUserIntoSession(newUserDto);
 //        }
     }
 
@@ -778,17 +778,17 @@ public class MasterUserServiceImpl implements IMasterUserService {
 
     @Override
     public UserListResultDto removeGroupIsNotInUserTenant(UserListResultDto userDto) {
-        if (WebUtil.checkLoginUserIsMaster()) {
+        if (AccountUtil.checkLoginUserIsMaster()) {
             return userDto;
         }
-        List<String> userTenants = Arrays.asList(WebUtil.getSelectedTenant());
+        List<String> userTenants = Arrays.asList(AccountUtil.getSelectedTenant());
         userDto = this.removeGroupIsNotInUserTenant(userTenants, userDto);
         return userDto;
     }
 
     @Override
     public void saveSelectedTenantToDB(String selectedTenant) {
-//        String userId = WebUtil.getUserLoginedId();
+//        String userId = AccountUtil.getUserLoginedId();
 //        MasterUser masterUser = masterUserRepository.findOne(userId);
 //        masterUser.setSelectedTenant(selectedTenant);
 //        masterUserRepository.save(masterUser);

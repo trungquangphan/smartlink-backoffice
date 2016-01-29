@@ -2,15 +2,15 @@ package ch.smartlink.backoffice.master.business.impl;
 
 import ch.smartlink.backoffice.common.constant.AppConstants;
 import ch.smartlink.backoffice.common.util.SessionUtil;
-import ch.smartlink.backoffice.common.util.WebUtil;
+import ch.smartlink.backoffice.common.util.TenantUtil;
+import ch.smartlink.backoffice.dao.entity.MasterTenant;
+import ch.smartlink.backoffice.dao.repository.IMasterTenantRepository;
+import ch.smartlink.backoffice.dao.repository.IMenuRepository;
 import ch.smartlink.backoffice.master.business.MenuService;
 import ch.smartlink.backoffice.master.util.BOSecurityChecker;
 import ch.smartlink.backoffice.master.web.form.Menu;
 import ch.smartlink.backoffice.master.web.form.MenuItem;
 import ch.smartlink.core.utils.JsonUtil;
-import ch.smartlink.backoffice.dao.entity.MasterTenant;
-import ch.smartlink.backoffice.dao.repository.IMasterTenantRepository;
-import ch.smartlink.backoffice.dao.repository.IMenuRepository;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Menu getMenuForCurrentUser() {
-        Menu menu = menuMap.get(WebUtil.getSelectedTenant());
+        Menu menu = menuMap.get(TenantUtil.getSelectedTenant());
         if (menu == null) {
             menu = menuMap.get(AppConstants.TENANT_MASTER);
         }
@@ -90,10 +90,10 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public String getMenuDataInJson() {
-        String menuInJson = (String) SessionUtil.getFromSession(SESSION_ATT_MENU);
+        String menuInJson = (String) SessionUtil.get(SESSION_ATT_MENU);
         if (StringUtils.isBlank(menuInJson)) {
             menuInJson = JsonUtil.convertObjectToJson(this.getMenuForCurrentUser());
-            SessionUtil.setToSession(SESSION_ATT_MENU, menuInJson);
+            SessionUtil.set(SESSION_ATT_MENU, menuInJson);
         }
         return menuInJson;
     }
@@ -117,7 +117,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     private static String buildUserRole(String moduleName) {
-        return String.format(ROLE_FORMAT, WebUtil.getSelectedTenant(), moduleName);
+        return String.format(ROLE_FORMAT, TenantUtil.getSelectedTenant(), moduleName);
     }
 
     private static List<MenuItem> buildMenuItem(List<ch.smartlink.backoffice.dao.entity.Menu> menus, MenuItem menuItemParent) {

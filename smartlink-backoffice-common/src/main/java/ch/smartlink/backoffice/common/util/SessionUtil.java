@@ -12,14 +12,14 @@ import java.util.Set;
 
 public class SessionUtil {
 
-    public static void setToSession(String attributeName, Object object) {
+    public static void set(String attributeName, Object object) {
         HttpSession session = getSession();
         if (session != null) {
             session.setAttribute(attributeName, object);
         }
     }
 
-    public static Object getFromSession(String attributeName) {
+    public static Object get(String attributeName) {
         HttpSession session = getSession();
         if (session != null) {
             return session.getAttribute(attributeName);
@@ -37,9 +37,9 @@ public class SessionUtil {
     }
 
 
-    public static void removeFromSession(String masterpassCheckout) {
+    public static void remove(String attr) {
         HttpSession session = getSession();
-        session.removeAttribute(masterpassCheckout);
+        session.removeAttribute(attr);
     }
 
     public static Map<String, Object> getAllAttribute() {
@@ -53,9 +53,9 @@ public class SessionUtil {
         return attributes;
     }
 
-    public static void setSessionAttribute(Map<String, Object> sessionAttributes) {
+    public static void set(Map<String, Object> attrs) {
         HttpSession httpSession = getSession();
-        Set<Map.Entry<String, Object>> entrySet = sessionAttributes.entrySet();
+        Set<Map.Entry<String, Object>> entrySet = attrs.entrySet();
         for (Map.Entry<String, Object> entry : entrySet) {
             httpSession.setAttribute(entry.getKey(), entry.getValue());
         }

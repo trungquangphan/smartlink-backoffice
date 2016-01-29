@@ -1,8 +1,7 @@
 package ch.smartlink.backoffice.master.config.security;
 
 import ch.smartlink.backoffice.common.constant.AppConstants;
-import ch.smartlink.backoffice.common.util.SessionUtil;
-import ch.smartlink.backoffice.common.util.WebUtil;
+import ch.smartlink.backoffice.common.util.TenantUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.thymeleaf.Arguments;
@@ -30,7 +29,7 @@ public class BOAuthorizeAttrProcessor extends AuthorizeAttrProcessor {
 
         if (StringUtils.isNotBlank(attributeValue)) {
             if (StringUtils.contains(attributeValue, DYNAMIC_TENANT_MARK)) {
-                attributeValue = String.format(attributeValue, WebUtil.getSelectedTenant());
+                attributeValue = String.format(attributeValue, TenantUtil.getSelectedTenant());
             }
             IContext context = arguments.getContext();
             if (!(context instanceof IWebContext)) {

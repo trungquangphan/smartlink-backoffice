@@ -22,9 +22,9 @@
         </dependency>
         <dependency>
             <groupId>ch.smartlink</groupId>
-            <artifactId>smartlink-back-office-common</artifactId>
-            <version>${project.version}</version>
+            <artifactId>smartlink-backoffice-common</artifactId>
             <scope>provided</scope>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>ch.smartlink</groupId>
